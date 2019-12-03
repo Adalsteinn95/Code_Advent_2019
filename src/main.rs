@@ -3,20 +3,29 @@ use std::time::Instant;
 
 mod common;
 mod one;
+mod three;
 mod two;
 
 fn one() -> String {
-    //let masses = common::read_list_of_numbers("data/one.input", "\n");
-    //format!("part1: {}", one::one(&masses),)
-
     let numbers = common::read_list_of_numbers("data/one.input", "\n");
-    return format!("{}", one::one(&numbers));
+
+    return format!("{},{}", one::one(&numbers), one::onepart2(&numbers));
 }
 
 fn two() -> String {
     let commands = common::read_list_of_numbers("data/two.input", ",");
+    return format!(
+        "{},{}",
+        two::two(&mut Vec::from(&commands[..])),
+        two::twopart2(&commands)
+    );
+}
 
-    return format!("{}", two::two(&mut Vec::from(&commands[..])));
+fn three() -> String {
+    let route_A = common::read_list_of_strings("data/three_routea.input", ",");
+
+    let route_B = common::read_list_of_strings("data/three_routeb.input", ",");
+    return format!("{:?}", three::three(&route_A, &route_B));
 }
 
 fn do_day(days: &[fn() -> String], day: usize) {
@@ -32,7 +41,7 @@ fn do_day(days: &[fn() -> String], day: usize) {
 fn main() {
     println!("https://adventofcode.com/2019");
 
-    let days: Vec<fn() -> String> = vec![one, two];
+    let days: Vec<fn() -> String> = vec![one, two, three];
 
     let args: Vec<String> = env::args().skip(1).collect();
 
